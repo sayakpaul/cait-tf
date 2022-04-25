@@ -23,7 +23,7 @@ class ClassAttn(layers.Layer):
         self.proj_drop = layers.Dropout(config.dropout_rate)
 
     def call(self, x, training):
-        B, N, C = tf.shape(x)
+        B, N, C = tf.shape(x)[0], tf.shape(x)[1], tf.shape(x)[2]
 
         # Query projection. `cls_token` embeddings are queries.
         q = tf.expand_dims(self.q(x[:, 0]), axis=1)

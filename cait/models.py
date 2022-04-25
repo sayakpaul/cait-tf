@@ -6,6 +6,7 @@ Reference:
 """
 
 from copy import deepcopy
+from functools import partial
 from typing import List
 
 import ml_collections as mlc
@@ -34,11 +35,11 @@ def LayerScaleBlockClassAttn(
     """Pre-norm transformer block meant to be applied to the embedding of the
     cls token and the embeddings of image patches.
 
-    Includes LayerScale ans Stochastic Depth.
+    Includes LayerScale and Stochastic Depth.
     """
     x = keras.Input((None, config.projection_dim))
     x_cls = keras.Input((None, config.projection_dim))
-    inputs = layers.Concatenate(axis=1)(x_cls, x)
+    inputs = layers.Concatenate(axis=1)([x_cls, x])
 
     # Class attention (CA).
     x1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(inputs)
@@ -65,11 +66,53 @@ def LayerScaleBlockClassAttn(
     return keras.Model([x, x_cls], [outputs, attn_scores], name=name)
 
 
+# class LayerScaleBlock(keras.Model):
+#     """Pre-norm transformer block meant to be applied to the embeddings of the
+#     image patches.
+
+#     Includes LayerScale and Stochastic Depth.
+#     """
+
+#     def __init__(self, config: mlc.ConfigDict, drop_prob: float, **kwargs):
+#         super().__init__(**kwargs)
+#         self.config = config
+#         self.drop_prob = drop_prob
+
+#         self.norm1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)
+#         self.attn = TalkingHeadAttn(config)
+#         self.ls1 = LayerScale(config) if config.init_values else tf.identity
+#         self.dp1 = StochasticDepth(drop_prob) if drop_prob else tf.identity
+
+#         self.norm2 = layers.LayerNormalization(epsilon=config.layer_norm_eps)
+#         self.mlp_fn = partial(
+#             mlp, hidden_units=config.mlp_units, dropout_rate=config.dropout_rate
+#         )
+#         self.ls2 = LayerScale(config) if config.init_values else tf.identity
+#         self.dp2 = StochasticDepth(drop_prob) if drop_prob else tf.identity
+
+#     def call(self, x):
+#         # Self-attention between patches.
+#         x1 = self.norm1(x)
+#         attn_output, attn_scores = self.attn(x1)
+#         attn_output = self.ls1(attn_output)
+#         attn_output = self.dp1(attn_output)
+#         x2 = x + attn_output
+
+#         # FFN.
+#         x3 = self.norm2(x2)
+#         x4 = self.mlp_fn(x3)
+#         x4 = self.ls2(x4)
+#         x4 = self.dp2(x4)
+#         outputs = x2 + x4
+
+#         return outputs, attn_scores
+
+
 def LayerScaleBlock(config: mlc.ConfigDict, drop_prob: float, name: str):
     """Pre-norm transformer block meant to be applied to the embeddings of the
     image patches.
 
-    Includes LayerScale ans Stochastic Depth.
+    Includes LayerScale and Stochastic Depth.
     """
     encoded_patches = layers.Input((None, config.projection_dim))
 
@@ -140,7 +183,7 @@ class CaiT(keras.Model):
         ]
 
         ca_config = deepcopy(config)
-        with ca_config.unlock():
+        with ca_config.unlocked():
             ca_config.dropout_rate = 0.0
         self.blocks_token_only = [
             LayerScaleBlockClassAttn(
@@ -154,7 +197,9 @@ class CaiT(keras.Model):
         )
 
         if config.num_classes > 0:
-            self.head = layers.Dense(config.num_classes, "classification_head")
+            self.head = layers.Dense(
+                config.num_classes, name="classification_head"
+            )
 
     def call(self, x):
         x = self.projection(x)
@@ -171,7 +216,7 @@ class CaiT(keras.Model):
         ca_ffn_attn = {}
         cls_tokens = tf.tile(self.cls_token, (tf.shape(x)[0], 1, 1))
         for blk in self.blocks_token_only:
-            cls_tokens, attn_scores = blk(x, cls_tokens)
+            cls_tokens, attn_scores = blk([x, cls_tokens])
             ca_ffn_attn[f"{blk.name}_att"] = attn_scores
 
         x = tf.concat([cls_tokens, x], axis=1)
@@ -181,9 +226,9 @@ class CaiT(keras.Model):
         # for convenience.
         if self.config.global_pool:
             x = (
-                (tf.reduce_mean(x[:, 1:], axis=1), sa_ffn_attn, ca_ffn_attn)
-                if self.global_pool == "avg"
-                else (x[:, 0], sa_ffn_attn, ca_ffn_attn)
+                tf.reduce_mean(x[:, 1:], axis=1)
+                if self.config.global_pool == "avg"
+                else x[:, 0]
             )
         return (
             (x, sa_ffn_attn, ca_ffn_attn)
