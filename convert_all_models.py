@@ -60,14 +60,14 @@ MODEL_CONFIGS = {
         "init_values": 1e-6,
     },
     "cait_m36_384": {
-        "dim": 384,
+        "dim": 768,
         "sa_ffn_layers": 36,
         "num_heads": 16,
         "image_size": 384,
         "init_values": 1e-6,
     },
     "cait_m48_448": {
-        "dim": 384,
+        "dim": 768,
         "sa_ffn_layers": 48,
         "num_heads": 16,
         "image_size": 384,
