@@ -51,7 +51,7 @@ class ClassAttn(layers.Layer):
         # Calculate attention between cls_token embedding and patch embeddings.
         attn = tf.matmul(q, k, transpose_b=True)
         attn = tf.nn.softmax(attn, axis=-1)
-        attn = self.attn_drop(attn)
+        attn = self.attn_drop(attn, training)
 
         x_cls = tf.matmul(attn, v)
         x_cls = tf.transpose(x_cls, perm=[0, 2, 1, 3])

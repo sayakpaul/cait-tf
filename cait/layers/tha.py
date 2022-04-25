@@ -38,14 +38,14 @@ class TalkingHeadAttn(layers.Layer):
         scale = tf.cast(self.scale, dtype=qkv.dtype)
         q, k, v = qkv[0] * scale, qkv[1], qkv[2]
 
-        attn = tf.matmul(q, k, transpose_b=True)
+        attn = tf.matmul(q, tf.transpose(k, perm=[0, 1, 3, 2]))
         attn = self.proj_l(tf.transpose(attn, perm=[0, 2, 3, 1]))
         attn = tf.transpose(attn, perm=[0, 3, 1, 2])
         attn = tf.nn.softmax(attn, axis=-1)
 
         attn = self.proj_w(tf.transpose(attn, perm=[0, 2, 3, 1]))
         attn = tf.transpose(attn, perm=[0, 3, 1, 2])
-        attn = self.attn_drop(attn)
+        attn = self.attn_drop(attn, training)
 
         x = tf.matmul(attn, v)
         x = tf.transpose(x, perm=[0, 2, 1, 3])
