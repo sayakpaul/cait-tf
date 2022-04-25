@@ -154,6 +154,8 @@ def main(args):
 
     # SA-FFN and CA-FFN blocks.
     idx = 0
+    all_layers = [layer.name for layer in tf_model.layers]
+    all_sa_ffn_blocks = list(filter(lambda x: "sa_ffn_block" in x, all_layers))
     start_ca = 0
 
     for outer_layer in tf_model.layers:
@@ -289,9 +291,7 @@ def main(args):
                         )
 
             idx += 1
-            # Since the minimum depth (number of SA-FFN layers) of CaiT models
-            # is 24 this is a valid assumption.
-            if idx > 24:
+            if idx > all_sa_ffn_blocks:
                 start_ca += 1
 
     print("Porting successful, serializing TensorFlow model...")

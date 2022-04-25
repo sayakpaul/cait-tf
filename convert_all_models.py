@@ -78,7 +78,6 @@ MODEL_CONFIGS = {
 
 def main():
     for model_name in MODEL_CONFIGS.keys():
-        print(f"Converting {model_name}.")
         model_config = MODEL_CONFIGS.get(model_name)
 
         image_sz = model_config.get("image_size")
