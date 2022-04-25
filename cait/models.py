@@ -193,7 +193,7 @@ class CaiT(keras.Model):
             epsilon=config.layer_norm_eps, name="head_norm"
         )
 
-        if config.num_classes > 0:
+        if config.pre_logits:
             self.head = layers.Dense(
                 config.num_classes, name="classification_head"
             )
