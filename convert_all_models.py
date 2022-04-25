@@ -70,7 +70,7 @@ MODEL_CONFIGS = {
         "dim": 768,
         "sa_ffn_layers": 48,
         "num_heads": 16,
-        "image_size": 384,
+        "image_size": 448,
         "init_values": 1e-6,
     },
 }
