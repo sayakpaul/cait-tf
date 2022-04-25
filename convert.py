@@ -165,7 +165,9 @@ def main(args):
         ):
             tf_block = tf_model.get_layer(outer_layer.name)
             pt_block_name = (
-                f"blocks.{idx}" if idx < 24 else f"blocks_token_only.{start_ca}"
+                f"blocks.{idx}"
+                if idx < len(all_sa_ffn_blocks)
+                else f"blocks_token_only.{start_ca}"
             )
 
             # LayerNorm layers.
@@ -291,7 +293,7 @@ def main(args):
                         )
 
             idx += 1
-            if idx > all_sa_ffn_blocks:
+            if idx > len(all_sa_ffn_blocks):
                 start_ca += 1
 
     print("Porting successful, serializing TensorFlow model...")
