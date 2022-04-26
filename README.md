@@ -55,6 +55,7 @@ Results are on ImageNet-1k validation set (top-1 and top-5 accuracies).
 | cait_xxs36_384 |        81.976 |        96.064 |
 | cait_xxs24_384 |        80.648 |        95.516 |
 | cait_xs24_384  |        83.738 |        96.756 |
+| cait_s24_384   |        84.944 |        97.212 |
 | cait_s36_384   |        85.192 |        97.372 |
 
 <small>*Results for the rest of the models will be updated soon.</small>
