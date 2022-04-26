@@ -49,7 +49,7 @@ Results are on ImageNet-1k validation set (top-1 accuracy).
 
 [TBA]
 
-Results can be verified with the code in `i1k_eval`. Results are inline with [1].
+Results can be verified with the code in `i1k_eval`. Results are in line with [1].
 
 
 ## Using the models
