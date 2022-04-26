@@ -6,7 +6,7 @@ from typing import List
 
 import tensorflow as tf
 
-TF_MODEL_ROOT = "gs://deit-tf"
+TF_MODEL_ROOT = "gs://cait-tf"
 TAR_ARCHIVES = os.path.join(TF_MODEL_ROOT, "tars/")
 
 
