@@ -85,7 +85,7 @@ _ = cait_xxs24_224(dummy_inputs)
 print(cait_xxs24_224.summary(expand_nested=True))
 ```
 
-To initialize a network with say, 5 classes do:
+To initialize a network with say, 5 classes, do:
 
 ```py
 config = base_config.get_config(
