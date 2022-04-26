@@ -8,7 +8,7 @@ class StochasticDepth(layers.Layer):
         super().__init__(**kwargs)
         self.drop_prob = drop_prop
 
-    def call(self, x, training=None):
+    def call(self, x, training=False):
         if training:
             keep_prob = 1 - self.drop_prob
             shape = (tf.shape(x)[0],) + (1,) * (len(tf.shape(x)) - 1)

@@ -6,7 +6,6 @@ Reference:
 """
 
 from copy import deepcopy
-from functools import partial
 from typing import List
 
 import ml_collections as mlc
@@ -44,15 +43,13 @@ def LayerScaleBlockClassAttn(
     # Class attention (CA).
     x1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(inputs)
     attn_output, attn_scores = ClassAttn(config)(x1)
-    attention_output = (
+    attn_output = (
         LayerScale(config)(attn_output) if config.init_values else attn_output
     )
-    attention_output = (
-        StochasticDepth(drop_prob)(attention_output)
-        if drop_prob
-        else attention_output
+    attn_output = (
+        StochasticDepth(drop_prob)(attn_output) if drop_prob else attn_output
     )
-    x2 = layers.Add()([x_cls, attention_output])
+    x2 = layers.Add()([x_cls, attn_output])
 
     # FFN.
     x3 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(x2)
@@ -127,7 +124,7 @@ def LayerScaleBlock(config: mlc.ConfigDict, drop_prob: float, name: str):
     attn_output = (
         StochasticDepth(drop_prob)(attn_output) if drop_prob else attn_output
     )
-    x2 = layers.Add()([attn_output, encoded_patches])
+    x2 = layers.Add()([encoded_patches, attn_output])
 
     # FFN.
     x3 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(x2)
@@ -159,7 +156,7 @@ class CaiT(keras.Model):
                     kernel_initializer="lecun_normal",
                 ),
                 layers.Reshape(
-                    target_shape=(config.num_patches, config.projection_dim),
+                    target_shape=(-1, config.projection_dim),
                     name="flatten_projection",
                 ),
             ],
@@ -196,7 +193,7 @@ class CaiT(keras.Model):
             epsilon=config.layer_norm_eps, name="head_norm"
         )
 
-        if config.num_classes > 0:
+        if not config.pre_logits:
             self.head = layers.Dense(
                 config.num_classes, name="classification_head"
             )
