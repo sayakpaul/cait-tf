@@ -45,9 +45,19 @@ print(model.summary(expand_nested=True))
 
 ## Results
 
-Results are on ImageNet-1k validation set (top-1 accuracy). 
+Results are on ImageNet-1k validation set (top-1 and top-5 accuracies). 
 
-[TBA]
+| model_name     |   top1_acc(%) |   top5_acc(%) |
+|:---------------:|:--------------:|:--------------:|
+| cait_s24_224   |        83.368 |        96.576 |
+| cait_xxs24_224 |        78.524 |        94.212 |
+| cait_xxs36_224 |        79.76  |        94.876 |
+| cait_xxs36_384 |        81.976 |        96.064 |
+| cait_xxs24_384 |        80.648 |        95.516 |
+| cait_xs24_384  |        83.738 |        96.756 |
+| cait_s36_384   |        85.192 |        97.372 |
+
+<small>*Results for the rest of the models will be updated soon.</small>
 
 Results can be verified with the code in `i1k_eval`. Results are in line with [1].
 
