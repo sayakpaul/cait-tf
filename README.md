@@ -62,6 +62,9 @@ Results are on ImageNet-1k validation set (top-1 and top-5 accuracies).
 <small>*Results for the rest of the models will be updated soon.</small>
 
 Results can be verified with the code in `i1k_eval`. Results are in line with [1].
+[Slight differences](https://github.com/facebookresearch/deit/blob/main/README_cait.md#model-zoo) in the results stemmed
+from the fact that I used a different set of augmentation transformations. Original 
+transformations suggested by the authors can be found [here](https://github.com/facebookresearch/deit/blob/main/README_cait.md).
 
 
 ## Using the models
