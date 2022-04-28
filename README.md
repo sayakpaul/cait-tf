@@ -7,8 +7,8 @@ models are not blackbox SavedModels i.e., they can be fully expanded into `tf.ke
 objects and one can call all the utility functions on them (example: `.summary()`).
 
 As of today, all the TensorFlow / Keras variants of the **CaiT** models listed
-[here](https://github.com/facebookresearch/deit#model-zoo) and [here](https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/cait.py) are available in this repository. The model checkpoints will be
-available on TF-Hub soon, stay tuned!
+[here](https://github.com/facebookresearch/deit/blob/main/README_cait.md#model-zoo) are
+available in this repository. 
 
 Refer to the ["Using the models"](https://github.com/sayakpaul/cait-tf#using-the-models)
 section to get started. 
