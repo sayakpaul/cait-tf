@@ -82,6 +82,8 @@ figures 6 and 7 of the original paper).
 | Original Image | Class Attention Maps | Class Saliency Map |
 | :--: | :--: | :--: |
 | ![cropped image](./assets/butterfly_cropped.png) | ![cls attn](./assets/cls_attn_heads.png) | ![saliency](./assets/cls_saliency.png) |
+
+For the best quality, refer to the `assets` directory.
  
 **Randomly initialized models**:
  
