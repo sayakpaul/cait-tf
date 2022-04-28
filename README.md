@@ -2,7 +2,7 @@
 
 This repository provides TensorFlow / Keras implementations of different CaiT
 [1] variants from Touvron et al. It also provides the TensorFlow / Keras models that have been
-populated with the original DeiT pre-trained params available from [2]. These
+populated with the original CaiT pre-trained params available from [2]. These
 models are not blackbox SavedModels i.e., they can be fully expanded into `tf.keras.Model`
 objects and one can call all the utility functions on them (example: `.summary()`).
 
