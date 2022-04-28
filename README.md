@@ -58,8 +58,8 @@ Results are on ImageNet-1k validation set (top-1 and top-5 accuracies).
 | cait_s24_384   |        84.944 |        97.212 |
 | cait_s36_384   |        85.192 |        97.372 |
 | cait_m36_384   |        85.924 |        97.598 |
+| cait_m48_448   |        86.066 |        97.590 |
 
-<small>*Results for the rest of the models will be updated soon.</small>
 
 Results can be verified with the code in `i1k_eval`. Results are in line with [1].
 [Slight differences](https://github.com/facebookresearch/deit/blob/main/README_cait.md#model-zoo) in the results stemmed
