@@ -83,7 +83,11 @@ figures 6 and 7 of the original paper).
 | :--: | :--: | :--: |
 | ![cropped image](./assets/butterfly_cropped.png) | ![cls attn](./assets/cls_attn_heads.png) | ![saliency](./assets/cls_saliency.png) |
 
-For the best quality, refer to the `assets` directory.
+For the best quality, refer to the `assets` directory. You can also generate these plots using the following interactive demos on
+Hugging Face Spaces:
+
+* [Generate Class Attention plots](https://huggingface.co/spaces/probing-vits/class-attention-map)
+* [Generate Class Saliency plots](https://huggingface.co/spaces/probing-vits/class-saliency)
  
 **Randomly initialized models**:
  
