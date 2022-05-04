@@ -1,5 +1,9 @@
 # CaiT-TF (Going deeper with Image Transformers)
 
+[![TensorFlow 2.8](https://img.shields.io/badge/TensorFlow-2.8-FF6F00?logo=tensorflow)](https://github.com/tensorflow/tensorflow/releases/tag/v2.8.0)
+[![HugginFace badge](https://img.shields.io/badge/🤗%20Hugging%20Face-Spaces-yellow.svg)](https://huggingface.co/spaces)
+[![Models on TF-Hub](https://img.shields.io/badge/TF--Hub-Models%20on%20TF--Hub-orange)](https://tfhub.dev/sayakpaul/collections/cait/1)
+
 This repository provides TensorFlow / Keras implementations of different CaiT
 [1] variants from Touvron et al. It also provides the TensorFlow / Keras models that have been
 populated with the original CaiT pre-trained params available from [2]. These
