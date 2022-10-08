@@ -17,6 +17,11 @@ available in this repository.
 Refer to the ["Using the models"](https://github.com/sayakpaul/cait-tf#using-the-models)
 section to get started. 
 
+**Updates Oct 8 2022**: This project [received](https://www.kaggle.com/discussions/general/358450)
+the Kaggle ML Research Spotlight Prize (September 2022)
+
+**Updates Sept 25 2022**: [Blog post on CaiT](https://keras.io/examples/vision/cait/)
+
 ## Table of contents
 
 * [Conversion](https://github.com/sayakpaul/cait-tf#conversion)
